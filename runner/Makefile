@@ -3,7 +3,7 @@ NAME ?= ${DOCKER_USER}/actions-runner
 CUDA_NAME ?= ${DOCKER_USER}/actions-runner-cuda
 DIND_RUNNER_NAME ?= ${DOCKER_USER}/actions-runner-dind
 TAG ?= latest
-CUDA_TAG ?= 11.7.1-runtime-ubuntu20.04
+CUDA_TAG ?= 11.7.1-cudnn8-devel-ubuntu20.04
 TARGETPLATFORM ?= $(shell arch)
 
 RUNNER_VERSION ?= 2.296.0
