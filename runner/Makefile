@@ -1,7 +1,7 @@
 DOCKER_USER ?= amaldonadomat
 NAME ?= ${DOCKER_USER}/actions-runner
 DIND_RUNNER_NAME ?= ${DOCKER_USER}/actions-runner-dind
-TAG ?= latest
+TAG ?= arm-ubuntu2004
 TARGETPLATFORM ?= $(shell arch)
 
 RUNNER_VERSION ?= 2.296.0
