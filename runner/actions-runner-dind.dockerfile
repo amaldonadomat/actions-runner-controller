@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu20.04
 
 ARG TARGETPLATFORM
 ARG RUNNER_VERSION=2.298.2

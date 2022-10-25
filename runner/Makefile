@@ -1,8 +1,10 @@
-DOCKER_USER ?= summerwind
+DOCKER_USER ?= amaldonadomat
 DOCKER ?= docker
-NAME ?= ${DOCKER_USER}/actions-runner
+CUDA_NAME ?= ${DOCKER_USER}/actions-runner-cuda
+CUDA_DIND_NAME ?= ${DOCKER_USER}/actions-runner-cuda-dind
 DIND_RUNNER_NAME ?= ${DOCKER_USER}/actions-runner-dind
 TAG ?= latest
+CUDA_TAG ?= 11.7.1-cudnn8-devel-ubuntu20.04
 TARGETPLATFORM ?= $(shell arch)
 
 RUNNER_VERSION ?= 2.298.2
@@ -65,3 +67,23 @@ docker-buildx-ubuntu:
 	  -f actions-runner-dind.dockerfile \
 	  -t "${DIND_RUNNER_NAME}:${TAG}" \
 	  . ${PUSH_ARG}
+
+docker-build-cuda-dind:
+	docker build \
+	  --build-arg TARGETPLATFORM=${TARGETPLATFORM} \
+	  --build-arg RUNNER_VERSION=${RUNNER_VERSION} \
+	  --build-arg RUNNER_CONTAINER_HOOKS_VERSION=${RUNNER_CONTAINER_HOOKS_VERSION} \
+	  --build-arg DOCKER_VERSION=${DOCKER_VERSION} \
+	  -f actions-runner.dockerfile \
+	  -t ${CUDA_NAME}:${CUDA_TAG} .
+
+	${DOCKER} build \
+	  --build-arg TARGETPLATFORM=${TARGETPLATFORM} \
+	  --build-arg RUNNER_VERSION=${RUNNER_VERSION} \
+	  --build-arg DOCKER_VERSION=${DOCKER_VERSION} \
+	  -f actions-runner-dind.dockerfile \
+	  -t ${CUDA_DIND_NAME}:${CUDA_TAG} .
+
+
+docker-push-cuda:
+	docker push ${CUDA_NAME}:${CUDA_TAG}
