@@ -93,7 +93,7 @@ update-status "Registering"
 retries_left=10
 while [[ ${retries_left} -gt 0 ]]; do
   log.debug 'Configuring the runner.'
-  ./config.sh --unattended --replace \
+  RUNNER_ALLOW_RUNASROOT=1 ./config.sh --unattended --replace \
     --name "${RUNNER_NAME}" \
     --url "${GITHUB_URL}${ATTACH}" \
     --token "${RUNNER_TOKEN}" \
